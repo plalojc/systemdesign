@@ -1,4 +1,4 @@
-package plal.util;
+package plal.parkinglot.com.util;
 
 public enum VT {
     TWO,
