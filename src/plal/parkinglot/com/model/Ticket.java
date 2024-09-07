@@ -37,4 +37,14 @@ public class Ticket {
     public void setParkingNo(ParkingSlot parkingNo) {
         this.parkingNo = parkingNo;
     }
+
+    public boolean isValidTicket() {
+        return this.vehicle != null;
+    }
+
+    public void invalidateTicket() {
+        this.vehicle = null;
+        this.parkingNo = null;
+        this.entryTime = 0;
+    }
 }

@@ -15,10 +15,13 @@ public class ExitGate {
         vpc.setPriceStrategy(ps);
     }
     public void clearPayment(Ticket ticket) {
-        VehicleParkingChargeCompute vpc = ParkingChargeComputeFactory.getParkingChargeComputeFactory(ticket);
-        double amount = vpc.parkingChargeCompute(ticket);
-        System.out.println("Amount Paid :"+amount);
-        ParkingManager pm = ParkingManagerFactory.getParkingManager(ticket.getVehicle().getType());
-        pm.removeVehicle(ticket.getParkingNo());
+        if(ticket.isValidTicket()) {
+            VehicleParkingChargeCompute vpc = ParkingChargeComputeFactory.getParkingChargeComputeFactory(ticket);
+            double amount = vpc.parkingChargeCompute(ticket);
+            System.out.println("Amount Paid :" + amount);
+            ParkingManager pm = ParkingManagerFactory.getParkingManager(ticket.getVehicle().getType());
+            pm.removeVehicle(ticket.getParkingNo());
+            ticket.invalidateTicket();
+        }
     }
 }

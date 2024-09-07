@@ -10,12 +10,16 @@ import plal.parkinglot.com.util.VT;
 public class ParkingLot {
     public static void main(String[] args) throws InterruptedException {
         Vehicle vehicle = new Vehicle("KA061222", VT.FOUR);
+        Vehicle vehicle1 = new Vehicle("KA061282", VT.TWO);
         EntryGate entryGate = new EntryGate();
-        Ticket ticket = entryGate.bookParking(vehicle);
+        Ticket ticket1 = entryGate.bookParking(vehicle);
+        Ticket ticket2 = entryGate.bookParking(vehicle1);
         Thread.sleep(2000);
         ExitGate exitGate = new ExitGate();
         exitGate.setPriceCompute(VT.FOUR, new PerMilliSecPrice());
-        exitGate.clearPayment(ticket);
+        exitGate.clearPayment(ticket1);
+        exitGate.setPriceCompute(VT.TWO, new PerMilliSecPrice());
+        exitGate.clearPayment(ticket2);
 
     }
 
