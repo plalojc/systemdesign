@@ -7,12 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class ParkingManager {
-    private List<ParkingSlot> parkingList;
+    private final List<ParkingSlot> parkingList;
     private int parkingCapacity;
+    private int parkedVehicleCount;
 
     public ParkingManager(int capacity){
-        parkingList = new ArrayList<>(capacity);
+        this.parkingList = new ArrayList<>(capacity);
         this.parkingCapacity = capacity;
+        for(int i=1; i<=capacity; i++) {
+            parkingList.add(new ParkingSlot(i));
+        }
     }
 
     protected List<ParkingSlot> getParkingList() {
@@ -20,10 +24,12 @@ public abstract class ParkingManager {
     }
 
     public ParkingSlot findParkingSpace(){
+        ParkingSlot ps = null;
         if(!isParkingFull()){
-            return getParkingList().stream().filter(ParkingSlot::isParkingEmpty).findFirst().get();
+            //ps = new ParkingSlot(getParkingList().size()+1);
+            ps = getParkingList().stream().filter(ParkingSlot::isParkingEmpty).findFirst().get();
         }
-        return null;
+        return ps;
     }
 
     public void addParkingSlot(int additionalCapacity) {
@@ -36,13 +42,15 @@ public abstract class ParkingManager {
 
     public void ParkVehicle(ParkingSlot slot, Vehicle vehicle) {
         slot.parkVehicle(vehicle);
+        parkedVehicleCount++;
     }
 
     public void removeVehicle(ParkingSlot slot) {
         slot.removeVehicle();
+        parkedVehicleCount--;
     }
 
     public boolean isParkingFull() {
-       return  parkingList.size() == parkingCapacity;
+       return  parkedVehicleCount == parkingCapacity;
     }
 }

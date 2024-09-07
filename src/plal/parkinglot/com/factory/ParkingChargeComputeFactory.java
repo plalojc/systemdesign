@@ -17,8 +17,19 @@ public class ParkingChargeComputeFactory {
         VehicleParkingChargeCompute vpc = cache.get(type);
         if(vpc != null) return vpc;
         vpc = switch (type) {
-            case VT.TWO -> new TwoWParkingChargeCompute(new PerMinutePrice());
-            case VT.FOUR -> new FourWParkingChargeCompute(new PerHourPrice());
+            case TWO -> new TwoWParkingChargeCompute(new PerMinutePrice());
+            case FOUR -> new FourWParkingChargeCompute(new PerHourPrice());
+        };
+        cache.put(type, vpc);
+        return vpc;
+    }
+
+    public static VehicleParkingChargeCompute getParkingChargeComputeFactory(VT type) {
+        VehicleParkingChargeCompute vpc = cache.get(type);
+        if(vpc != null) return vpc;
+        vpc = switch (type) {
+            case TWO -> new TwoWParkingChargeCompute(new PerMinutePrice());
+            case FOUR -> new FourWParkingChargeCompute(new PerHourPrice());
         };
         cache.put(type, vpc);
         return vpc;

@@ -20,8 +20,8 @@ public class ParkingManagerFactory {
         if(pm != null) return pm;
 
         pm = switch (type) {
-            case VT.TWO -> new TwoWPM(60);
-            case VT.FOUR -> new FourWPM(100);
+            case TWO -> new TwoWPM(6);
+            case FOUR -> new FourWPM(10);
         };
         cache.put(type, pm);
         return pm;
